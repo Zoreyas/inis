@@ -1,0 +1,54 @@
+.main-div {
+    margin: 5%;
+    margin-top: 2%;
+}
+
+.header {
+    font-family: "Goudy Bookletter 1911", sans-serif;
+    font-size: 200%;
+    margin: 1%;
+}
+
+.tiles-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shirt-tile {
+    margin: 10px;
+    width: 200px;
+    border-radius: 20px;
+    border: 3px, solid;
+}
+
+.buttons-line {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    background-color: violet;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.shirt-name {
+    margin: 5px;
+}
+
+.colors-text {
+    margin: 5px;
+    font-size: small;
+    color: grey;
+}
+
+.shirt-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.detail-view {
+
+}
