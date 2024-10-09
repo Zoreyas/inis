@@ -68,6 +68,8 @@ function createDetailView() {
         return item.name === localStorage.getItem('currentShirt');
       });
 
+    let currentView = 'front'; 
+    let currentColor = Object.keys(shirt.colors)[0]; 
     shirtImage = document.createElement('img');
     shirtImage.className = 'shirt-image';
     if (shirt.colors && Object.keys(shirt.colors).length > 0) {
@@ -100,13 +102,44 @@ function createDetailView() {
     backtButton = 'Back';
 
     colorButtons = [];
-    for (i = 0; i < Object.keys(shirt.colors).length; i++) {
-        colorButtons.push = document.createElement('div');
-        
-    }
+    
+    const colors = shirt.colors;
 
     container.appendChild(shirtName);
     container.appendChild(shirtImage);
     container.appendChild(shirtPrice);
+    Object.keys(colors).forEach(color => {
+        const colorButton = document.createElement('button');
+        colorButton.style.backgroundColor = color;
+        colorButton.textContent = color;
+
+        colorButton.addEventListener('click', () => {
+            currentColor = color; 
+            shirtImage.src = `${colors[color][currentView]}`; 
+        });
+
+        container.appendChild(colorButton);
+    });
+
+    if (shirt.colors[currentColor].front) {
+        const frontButton = document.createElement('button');
+        frontButton.textContent = 'Front';
+        frontButton.addEventListener('click', () => {
+            currentView = 'front';
+            shirtImage.src = `${colors[currentColor].front}`; 
+        });
+        container.appendChild(frontButton);
+    }
+
+    if (shirt.colors[currentColor].back) {
+        const backButton = document.createElement('button');
+        backButton.textContent = 'Back';
+        backButton.addEventListener('click', () => {
+            currentView = 'back'; 
+            shirtImage.src = `${colors[currentColor].back}`; 
+        });
+        container.appendChild(backButton);
+    }
+
     container.appendChild(shirtDescription);
 }
