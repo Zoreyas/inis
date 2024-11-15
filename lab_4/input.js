@@ -13,6 +13,9 @@ function getTarget(e) {
 function restorePosition(targ, lastX, lastY) {
     targ.style.top = lastX;
     targ.style.left = lastY;
+    isActive = false;
+    isDblTouched = false;
+    var isColorChangeActive = false;
     targ = null;
 }
 
