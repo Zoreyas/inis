@@ -13,6 +13,7 @@ function getTarget(e) {
 function restorePosition(targ, lastX, lastY) {
     targ.style.top = lastX;
     targ.style.left = lastY;
+    targ = null;
 }
 
 let expired;
@@ -165,7 +166,6 @@ function prepareDivs() {
 
             if (e.touches.length === 2) {
                 restorePosition(targ, lastX, lastY);
-                isActive = false;
             }
         }  
     });
