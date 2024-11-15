@@ -16,6 +16,8 @@ function restorePosition(targ, lastX, lastY) {
 }
 
 let expired;
+let fastExpired = null;
+var dblFlag = false;
 var isActive = false;
 var isDblTouched = false;
 var isColorChangeActive = false;
@@ -25,6 +27,14 @@ var lastX, lastY;
 let doubleClick = function () {
     console.log('double click')
     isDblTouched = true;
+    dblFlag = true;
+}
+
+let fastClick = function () {
+    console.log('fasttouch');
+    isDblTouched = false;
+    tart = null;
+    isActive = false;
 }
 
 let doubleTouch = function (e) {
@@ -38,6 +48,20 @@ let doubleTouch = function (e) {
         } else {
             expired = e.timeStamp + 400
         }
+    }
+}
+
+let fastTouch = function (e) {
+    if (e.touches.length === 1) {
+        fastExpired = e.timeStamp + 400
+    }
+    if ((e.touches.length === 0) && (e.timeStamp <= fastExpired) && (dblFlag == false)) {
+        e.preventDefault()
+        fastClick();
+        fastExpired = null
+    }
+    if (e.touches.length === 0) {
+        dblFlag = false;
     }
 }
 
@@ -66,8 +90,10 @@ function prepareDivs() {
         });
 
         Divs[i].addEventListener('mouseup', function() {
-            isActive = false;
-            isColorChangeActive = false;
+            if (isDblTouched == false) {
+                isActive = false;
+                isColorChangeActive = false;
+            }
         }, true);  
 
         Divs[i].addEventListener("touchstart", function(e) {
@@ -91,8 +117,11 @@ function prepareDivs() {
         });
 
         Divs[i].addEventListener("touchstart", doubleTouch);
-
     }
+
+    document.addEventListener("touchstart", fastTouch);
+
+    document.addEventListener("touchend", fastTouch);
 
     document.addEventListener('keydown', function(e) {
         if (e.key === "Escape") {
@@ -131,9 +160,12 @@ function prepareDivs() {
             x = e.touches[0].clientX;
             y = e.touches[0].clientY;
 
-
             targ.style.left = (x + offset[0]) + 'px';
-            targ.style.top  = (y + offset[1]) + 'px';
+            targ.style.top  = (y + offset[1]) + 'px'; 
+
+            if (e.touches.length === 2) {
+                restorePosition(targ, lastX, lastY);
+            }
         }  
     });
 }
