@@ -165,6 +165,7 @@ function prepareDivs() {
 
             if (e.touches.length === 2) {
                 restorePosition(targ, lastX, lastY);
+                isActive = false;
             }
         }  
     });
